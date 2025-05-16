@@ -1,70 +1,114 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Moon, Sun } from "lucide-react";
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abdul Salam's World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka One', cursive;
+      background: linear-gradient(to bottom right, #6a0dad, #b19cd9);
+      color: white;
+      cursor: url('superhero-pointer.png'), auto;
+    }
 
-export default function MainPage() {
-  const [darkMode, setDarkMode] = useState(false);
+    nav {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
 
-  return (
-    <div className={darkMode ? "bg-purple-900 text-white" : "bg-purple-100 text-black"}>
-      {/* Header Section */}
-      <header className="text-center py-10">
-        <motion.h1
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-bold font-fredoka"
-        >
-          Welcome to Abdul Salam's World!
-        </motion.h1>
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-lg mt-2"
-        >
-          A fun place to explore Abdul Salam’s hobbies, stories, and more!
-        </motion.p>
-        <div className="mt-4">
-          <Button onClick={toggleDarkMode} className="rounded-full">
-            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </Button>
-        </div>
-      </header>
+    main {
+      text-align: center;
+      padding: 2rem;
+    }
 
-      {/* Function Cards */}
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-        {[
-          { title: "Gallery", description: "See my photos and fun memories!" },
-          { title: "My Drones", description: "Explore my awesome flying machines." },
-          { title: "My Videos", description: "Watch me in action!" },
-          { title: "About Me", description: "Learn more about who I am." }
-        ].map((item, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.05 }}
-            className="rounded-2xl shadow-xl bg-white p-4 text-center cursor-pointer hover:bg-purple-200 transition duration-300"
-          >
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold text-purple-700 font-fredoka">
-                  {item.title}
-                </h2>
-                <p className="mt-2 text-base">{item.description}</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </main>
+    .round-image {
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      margin: 1rem;
+      border: 5px solid white;
+    }
 
-      {/* Footer */}
-      <footer className="text-center py-6 text-sm mt-10">
-        <p>Made with love for Abdul Salam - 2025</p>
-      </footer>
-    </div>
-  );
-}
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .pointer-trail {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background: radial-gradient(circle, #ff69b4, #a020f0);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="pointer-trail" id="trail"></div>
+
+  <nav>
+    <a onclick="showSection('home')">Home</a>
+    <a onclick="showSection('gallery')">Gallery</a>
+  </nav>
+
+  <main>
+    <section id="home" class="section active">
+      <h1>Welcome to Abdul Salam's World</h1>
+      <img src="main-photo.png" alt="Abdul Salam" class="round-image" />
+      <p>This is a fun space made just for Abdul Salam, filled with joy, color, and adventures!</p>
+    </section>
+
+    <section id="gallery" class="section">
+      <h1>Gallery</h1>
+      <div class="gallery">
+        <img src="photo1.png" alt="Fun moment 1" class="round-image" />
+        <img src="photo2.png" alt="Fun moment 2" class="round-image" />
+        <img src="photo3.png" alt="Fun moment 3" class="round-image" />
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Pointer trail
+    const trail = document.getElementById("trail");
+    document.addEventListener("mousemove", (e) => {
+      trail.style.top = `${e.clientY}px`;
+      trail.style.left = `${e.clientX}px`;
+    });
+
+    // Navigation
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
