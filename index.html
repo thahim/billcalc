@@ -1,102 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abdul Salam Thahim - The Heroic Kid</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to bottom right, #4facfe, #00f2fe);
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 2rem;
-      background: #1f1f1f;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 3rem;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #ccc;
-    }
-    .hero-img {
-      display: block;
-      margin: 2rem auto;
-      width: 200px;
-      height: 200px;
-      background: url('https://via.placeholder.com/200') no-repeat center/cover;
-      border-radius: 50%;
-      border: 5px solid #fff;
-    }
-    .section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-      background: rgba(0,0,0,0.2);
-      border-radius: 15px;
-      margin-bottom: 2rem;
-    }
-    .section h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .superpower {
-      font-weight: bold;
-      color: #ffff00;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #111;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Abdul Salam Thahim</h1>
-    <p>The 9-Year-Old Legend with a Heart of Gold and a Drone Army</p>
-  </header>
-  <div class="hero-img"></div>
-  <section class="section">
-    <h2>Heroic Profile</h2>
-    <p><strong>Age:</strong> 9 years old</p>
-    <p><strong>Location:</strong> Bangkok, Thailand</p>
-    <p><strong>Known For:</strong> Calling the Adhan like a true Muazzin, flying not one, not two, but <em>three drones</em> like a pro, and having a smile that melts hearts!</p>
-  </section>
-  <section class="section">
-    <h2>Superpowers</h2>
-    <ul>
-      <li class="superpower">Drone Commander – Master of the P10, P14 Pro, and the upcoming mystery drone</li>
-      <li class="superpower">Adhan Warrior – Delivers the call to prayer with heroic voice</li>
-      <li class="superpower">Cuteness Overload – Can disarm any adult with one smile</li>
-    </ul>
-  </section>
-  <section class="section">
-    <h2>Family & Background</h2>
-    <p>Son of Saad Thahim, Abdul Salam is a proud part of the Thahim legacy. He’s loved by his father, respected in his village, and cheered by TikTok fans across the world!</p>
-  </section>
-  <section class="section">
-    <h2>Fun Facts</h2>
-    <ul>
-      <li>Loves tech gadgets and flying drones.</li>
-      <li>Has a fan base on TikTok thanks to his heroic activities.</li>
-      <li>Once called the Adhan like a professional Muazzin at age 9!</li>
-    </ul>
-  </section>
-  <footer>
-    <p>&copy; 2025 The Adventures of Abdul Salam Thahim</p>
-    <p>Stay tuned for his next heroic mission!</p>
-  </footer>
-  <script>
-    // Heroic Animation
-    document.querySelector('header h1').addEventListener('mouseover', () => {
-      alert("Abdul Salam is watching you. Be good!");
-    });
-  </script>
-</body>
-</html>
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Moon, Sun } from "lucide-react";
+import { motion } from "framer-motion";
+
+export default function MainPage() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+
+  return (
+    <div className={darkMode ? "bg-purple-900 text-white" : "bg-purple-100 text-black"}>
+      {/* Header Section */}
+      <header className="text-center py-10">
+        <motion.h1
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold font-fredoka"
+        >
+          Welcome to Abdul Salam's World!
+        </motion.h1>
+        <motion.p
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg mt-2"
+        >
+          A fun place to explore Abdul Salam’s hobbies, stories, and more!
+        </motion.p>
+        <div className="mt-4">
+          <Button onClick={toggleDarkMode} className="rounded-full">
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </Button>
+        </div>
+      </header>
+
+      {/* Function Cards */}
+      <main className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+        {[
+          { title: "Gallery", description: "See my photos and fun memories!" },
+          { title: "My Drones", description: "Explore my awesome flying machines." },
+          { title: "My Videos", description: "Watch me in action!" },
+          { title: "About Me", description: "Learn more about who I am." }
+        ].map((item, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.05 }}
+            className="rounded-2xl shadow-xl bg-white p-4 text-center cursor-pointer hover:bg-purple-200 transition duration-300"
+          >
+            <Card>
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold text-purple-700 font-fredoka">
+                  {item.title}
+                </h2>
+                <p className="mt-2 text-base">{item.description}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </main>
+
+      {/* Footer */}
+      <footer className="text-center py-6 text-sm mt-10">
+        <p>Made with love for Abdul Salam - 2025</p>
+      </footer>
+    </div>
+  );
+}
