@@ -2,113 +2,199 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abdul Salam's World</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hyderabad Updates Bill Calculator</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    :root {
+      --primary-color: #0073e6;
+      --secondary-color: #00b894;
+      --background-color: #f5f7fa;
+      --text-color: #222;
+    }
+
     body {
       margin: 0;
-      font-family: 'Fredoka One', cursive;
-      background: linear-gradient(to bottom right, #6a0dad, #b19cd9);
-      color: white;
-      cursor: url('superhero-pointer.png'), auto;
-    }
-
-    nav {
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 1rem;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
       display: flex;
-      justify-content: center;
-      gap: 2rem;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
     }
 
-    nav a {
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: var(--primary-color);
+    }
+
+    header p {
+      font-weight: 400;
+      color: #444;
+      margin-top: 5px;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .appliance-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .appliance-row input {
+      flex: 1;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .appliance-row input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .add-btn {
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .add-btn button {
+      background: var(--secondary-color);
       color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
+      border: none;
+      padding: 8px 14px;
+      font-weight: 600;
+      border-radius: 6px;
       cursor: pointer;
     }
 
-    main {
+    .add-btn button:hover {
+      background: #01956c;
+    }
+
+    button[type="submit"] {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button[type="submit"]:hover {
+      background: #005bb5;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
       text-align: center;
-      padding: 2rem;
     }
 
-    .round-image {
-      border-radius: 50%;
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      margin: 1rem;
-      border: 5px solid white;
-    }
-
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .pointer-trail {
-      position: fixed;
-      width: 15px;
-      height: 15px;
-      background: radial-gradient(circle, #ff69b4, #a020f0);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .active {
-      display: block;
+    @media (max-width: 520px) {
+      .appliance-row {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="pointer-trail" id="trail"></div>
 
-  <nav>
-    <a onclick="showSection('home')">Home</a>
-    <a onclick="showSection('gallery')">Gallery</a>
-  </nav>
+  <header>
+    <img src="https://raw.githubusercontent.com/thahim/billcalc/main/FB_IMG_1747508222912(1).png" alt="Logo" />
+    <h1>Hyderabad Updates Bill Calculator</h1>
+    <p>Estimate your monthly electricity bill in PKR</p>
+  </header>
 
-  <main>
-    <section id="home" class="section active">
-      <h1>Welcome to Abdul Salam's World</h1>
-      <img src="main-photo.png" alt="Abdul Salam" class="round-image" />
-      <p>This is a fun space made just for Abdul Salam, filled with joy, color, and adventures!</p>
-    </section>
-
-    <section id="gallery" class="section">
-      <h1>Gallery</h1>
-      <div class="gallery">
-        <img src="photo1.png" alt="Fun moment 1" class="round-image" />
-        <img src="photo2.png" alt="Fun moment 2" class="round-image" />
-        <img src="photo3.png" alt="Fun moment 3" class="round-image" />
+  <form id="billForm">
+    <div id="appliances-container">
+      <div class="appliance-row">
+        <input type="text" placeholder="Appliance Name (optional)" />
+        <input type="number" min="1" placeholder="Wattage (W)" required />
+        <input type="number" min="0" max="24" step="0.1" placeholder="Hours per day" required />
       </div>
-    </section>
-  </main>
+    </div>
+
+    <div class="add-btn">
+      <button type="button" onclick="addAppliance()">+ Add Another Appliance</button>
+    </div>
+
+    <button type="submit">Calculate Estimate</button>
+  </form>
+
+  <div id="result"></div>
 
   <script>
-    // Pointer trail
-    const trail = document.getElementById("trail");
-    document.addEventListener("mousemove", (e) => {
-      trail.style.top = `${e.clientY}px`;
-      trail.style.left = `${e.clientX}px`;
-    });
+    const container = document.getElementById('appliances-container');
 
-    // Navigation
-    function showSection(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function addAppliance() {
+      const row = document.createElement('div');
+      row.className = 'appliance-row';
+      row.innerHTML = `
+        <input type="text" placeholder="Appliance Name (optional)" />
+        <input type="number" min="1" placeholder="Wattage (W)" required />
+        <input type="number" min="0" max="24" step="0.1" placeholder="Hours per day" required />
+      `;
+      container.appendChild(row);
     }
+
+    document.getElementById('billForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const rows = container.querySelectorAll('.appliance-row');
+      let totalWhPerDay = 0;
+
+      for (const row of rows) {
+        const inputs = row.querySelectorAll('input');
+        const wattage = parseFloat(inputs[1].value);
+        const hours = parseFloat(inputs[2].value);
+
+        if (isNaN(wattage) || isNaN(hours)) {
+          alert('Please enter valid wattage and hours.');
+          return;
+        }
+
+        totalWhPerDay += wattage * hours;
+      }
+
+      const costPerKWh = 30; // PKR
+      const kWhPerMonth = (totalWhPerDay / 1000) * 30;
+      const estimate = kWhPerMonth * costPerKWh;
+
+      document.getElementById('result').textContent =
+        `Estimated Monthly Bill: PKR ${estimate.toFixed(2)}`;
+    });
   </script>
+
 </body>
 </html>
